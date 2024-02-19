@@ -1,0 +1,61 @@
+[
+  { "title":"Nike Blazer Mid Suede",
+    "price": 129.99,
+    "imageUrl": "/img/sneakers/1.jpg"
+  },
+  {
+    "title":"Nike Air Max 270",
+    "price": 129.99,
+    "imageUrl": "/img/sneakers/2.jpg"
+  },
+  {
+    "title":"Nike Blazer Mid Suede v2",
+    "price": 84.99,
+    "imageUrl": "/img/sneakers/3.jpg"
+  },
+  {
+    "title":"Puma X Aka Boku Future Rider",
+    "price": 89.99,
+    "imageUrl": "/img/sneakers/4.jpg"
+  },
+  {
+    "title":"Under Armour Curry 8",
+    "price": 151.99,
+    "imageUrl": "/img/sneakers/5.jpg"
+  },
+  {
+    "title":"Nike Kyrie 7",
+    "price": 112.99,
+    "imageUrl": "/img/sneakers/6.jpg"
+  },
+  {
+    "title":"Jordan Air Jordan 11",
+    "price": 107.99,
+    "imageUrl": "/img/sneakers/7.jpg"
+  },
+  {
+    "title":"Nike LeBron XVIII",
+    "price": 164.99,
+    "imageUrl": "/img/sneakers/8.jpg"
+  },
+  {
+    "title":"Nike Lebron XVIII Low",
+    "price": 139.99,
+    "imageUrl": "/img/sneakers/9.jpg"
+  },
+  {
+    "title":"Кроссовки Nike Blazer Mid Suede",
+    "price": 84.99,
+    "imageUrl": "/img/sneakers/10.jpg"
+  },
+  {
+    "title":"Кроссовки Puma X Aka Boku Future Rider",
+    "price": 89.99,
+    "imageUrl": "/img/sneakers/11.jpg"
+  },
+  {
+    "title":"Nike Kyrie Flytrap IV",
+    "price": 112.99,
+    "imageUrl": "/img/sneakers/12.jpg"
+  }
+]
