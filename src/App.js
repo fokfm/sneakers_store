@@ -2,56 +2,82 @@ import React, {useEffect, useState} from "react";
 import Card from "./components/Card/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
-
+import axios from "axios";
 
 
 function App() {
 
-  const urlItems = 'https://65d24eef987977636bfc3b74.mockapi.io/sneackers_api/v1/items';
+    const urlItems = 'https://65d24eef987977636bfc3b74.mockapi.io/sneackers_api/v1/items';
+    const urlPostItems = 'https://65d24eef987977636bfc3b74.mockapi.io/sneackers_api/v1/cart';
 
-  const [items, setItems] = useState([]);
-  const [cardItems, setCartItems] = useState([]);
-  const [cartOpened, setCartOpened] = useState(false);
+    const [items, setItems] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+    const [cardItems, setCartItems] = useState([]);
+    const [cartOpened, setCartOpened] = useState(false);
 
-  useEffect(() =>{
-    fetch(urlItems)
-        .then(response => response.json())
-        .then(json => setItems(json));
+    useEffect(() => {
 
-  },[])
-
-  const onAddToCard = (obj) => {
-    setCartItems((prev) => [...prev, obj]);
-  }
-  console.log(cardItems)
+        axios.get(urlItems).then((res) => setItems(res.data));
+        axios.get(urlPostItems).then((res) => setCartItems(res.data));
 
 
-  return (
-    <div className="wrapper clear">
-      {cartOpened && <Drawer items={cardItems} onClickCart ={() => setCartOpened(!cartOpened)}/>}
-      <Header onClickCart ={() => setCartOpened(!cartOpened)}/>
-      <div className="content p-40">
-        <div className="d-flex align-center justify-between mb-40">
-          <h1>All sneakers</h1>
-          <div className="search-block d-flex">
-            <img src="img/search.svg" alt="" />
-            <input placeholder="Search..." />
-          </div>
+    }, [])
+
+    const onAddToCard = async (obj) => {
+
+        const {data: newCartItem} = await axios.post(urlPostItems, obj);
+        setCartItems((prev) => [...prev, newCartItem]);
+    }
+
+    const onDeleteInCart = (id) => async () => {
+        try {
+            await axios.delete(`https://65d24eef987977636bfc3b74.mockapi.io/sneackers_api/v1/cart/${id}`);
+            setCartItems((prev) => prev.filter(items => items.id !== id));
+        } catch (error) {
+            console.error(error)
+        }
+
+    }
+
+    const onChangeSearchInput = (event) => {
+
+        setSearchValue(event.target.value)
+        console.log(event.target.value)
+    }
+
+
+    return (
+        <div className="wrapper clear">
+            {cartOpened && <Drawer items={cardItems} onClickCart={() => setCartOpened(!cartOpened)}
+                                   onDeleteInCart={onDeleteInCart}/>}
+            <Header onClickCart={() => setCartOpened(!cartOpened)}/>
+            <div className="content p-40">
+                <div className="d-flex align-center justify-between mb-40">
+                    <h1>{searchValue ? `Search by:"${searchValue}"` : 'All sneakers'}</h1>
+                    <div className="search-block d-flex">
+                        <img src="img/search.svg" alt=""/>
+                        {searchValue &&
+                            <img onClick={() => setSearchValue('')} className="clear cu-p" src="/img/btn-remove.svg"
+                                 alt="Clear"/>}
+                        <input onChange={onChangeSearchInput} value={searchValue} placeholder="Search..."/>
+                    </div>
+                </div>
+                <div className="sneakers d-flex flex-wrap">
+                    {
+                        items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase())).map(item =>
+                            <Card
+                                key={item.imageUrl}
+                                title={item.title}
+                                price={item.price}
+                                imageUrl={item.imageUrl}
+                                onFavorite={() => console.log('Добавили в закладки')}
+                                onPlus={(obj) => onAddToCard(obj)}
+                            />)
+                    }
+                </div>
+            </div>
         </div>
-        <div className="sneakers d-flex flex-wrap"  >
-          {
-            items.map(item => <Card
-                title ={item.title}
-                price ={item.price}
-                imageUrl ={item.imageUrl}
-                onFavorite = {() => console.log('Добавили в закладки')}
-                onPlus = {(obj) => onAddToCard(obj)}
-            />)
-          }
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default App;

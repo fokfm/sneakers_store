@@ -19,6 +19,10 @@ function Card({title, imageUrl, price, onFavorite, onPlus}) {
     return (
 
         <div className={styles.card}>
+
+
+
+
             <div className={styles.favorite}>
                 <img src="/img/heard-unliked.svg" alt="no img"/>
             </div>
