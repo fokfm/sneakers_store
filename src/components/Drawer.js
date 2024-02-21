@@ -1,17 +1,32 @@
 import React from "react";
 
-function Drawer({onClickCart, items = []}) {
+function Drawer({onClickCart, items = [], onDeleteInCart}) {
+
+    console.log(items);
+
     return (
         <div className="overlay">
+
+            <div style={{ width: '100vw', height: '100vh', position:'fixed', top:'0', left: '0'}} onClick={onClickCart}></div>
+
             <div className="drawer">
                 <h2 className="d-flex justify-between mb-30">
                     Cart
                     <img onClick={onClickCart} className="cu-p" src="/img/btn-remove.svg" alt=""/>
                 </h2>
+                {/*<div className="cartEmpty d-flex align-center justify-center flex-column flex">*/}
+                {/*    <img className="mb-20" width="120px" src={image} alt="Empty" />*/}
+                {/*    <h2>{title}</h2>*/}
+                {/*    <p className="opacity-6">{description}</p>*/}
+                {/*    <button onClick={() => setCartOpened(false)} className="greenButton">*/}
+                {/*        <img src="img/arrow.svg" alt="Arrow" />*/}
+                {/*        Вернуться назад*/}
+                {/*    </button>*/}
+                {/*</div>*/}
                 <div className="items">
                     {
                         items.map(obj => (
-                            <div className="cartItem d-flex align-center mb-20">
+                            <div key = {obj.id} className="cartItem d-flex align-center mb-20">
                                 <div
                                     style={{backgroundImage: `url(${obj.imageUrl})`}}
                                     className="cartItemImg"
@@ -20,7 +35,7 @@ function Drawer({onClickCart, items = []}) {
                                     <p className="mb-5">{obj.title}</p>
                                     <b>{obj.price + ' $'}</b>
                                 </div>
-                                <img className="removeBtn" src="/img/btn-remove.svg" alt=""/>
+                                <img onClick={onDeleteInCart(obj.id)} className="removeBtn" src="/img/btn-remove.svg" alt=""/>
                             </div>
 
                         ))}
