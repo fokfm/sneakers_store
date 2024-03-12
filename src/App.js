@@ -2,7 +2,9 @@ import React, {useEffect, useState} from "react";
 import Card from "./components/Card/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
+import Favorites from "./components/Favorites";
 import axios from "axios";
+import {Routes, Route, Link} from "react-router-dom";
 
 
 function App() {
@@ -10,10 +12,14 @@ function App() {
     const urlItems = 'https://65d24eef987977636bfc3b74.mockapi.io/sneackers_api/v1/items';
     const urlPostItems = 'https://65d24eef987977636bfc3b74.mockapi.io/sneackers_api/v1/cart';
 
+
+
+
     const [items, setItems] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [cardItems, setCartItems] = useState([]);
     const [cartOpened, setCartOpened] = useState(false);
+
 
     useEffect(() => {
 
@@ -39,6 +45,12 @@ function App() {
 
     }
 
+
+
+
+
+
+
     const onChangeSearchInput = (event) => {
 
         setSearchValue(event.target.value)
@@ -47,7 +59,11 @@ function App() {
 
 
     return (
+
+
         <div className="wrapper clear">
+
+
             {cartOpened && <Drawer items={cardItems} onClickCart={() => setCartOpened(!cartOpened)}
                                    onDeleteInCart={onDeleteInCart}/>}
             <Header onClickCart={() => setCartOpened(!cartOpened)}/>
@@ -66,12 +82,9 @@ function App() {
                     {
                         items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase())).map(item =>
                             <Card
-                                key={item.imageUrl}
-                                title={item.title}
-                                price={item.price}
-                                imageUrl={item.imageUrl}
-                                onFavorite={() => console.log('Добавили в закладки')}
-                                onPlus={(obj) => onAddToCard(obj)}
+                                key={item.id}
+                                onPlus={onAddToCard}
+                                item = {item}
                             />)
                     }
                 </div>
