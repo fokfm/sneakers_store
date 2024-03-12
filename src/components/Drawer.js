@@ -43,26 +43,27 @@ function Drawer({onClickCart, items = [], onDeleteInCart}) {
                     ))}
 
                     <div className="cartTotalBlock">
-                    <ul>
-                    <li>
-                    <span>Total</span>
-                    <div></div>
-                    <b>21 498 $</b>
-                    </li>
-                    <li>
-                    <span>Tax 5%</span>
-                    <div></div>
-                    <b>1074 $</b>
-                    </li>
-                    </ul>
-                    <button className="greenButton">
-                    Checkout <img src="/img/arrow.svg" alt="no img"/>{" "}
-                    </button>
+                        <ul>
+                            <li>
+                                <span>Total</span>
+                                <br />
+                                <b>21 498 $</b>
+                            </li>
+                            <li>
+                                <span>Tax 5%</span>
+                                <br />
+                                <b>1074 $</b>
+                            </li>
+                        </ul>
+                        <button className="greenButton">
+                            Checkout
+                            {' '}
+                            <img src="/img/arrow.svg" alt="no img"/>
+                            {' '}
+                        </button>
                     </div>
                     </div>
                     )}
-
-
             </div>
         </div>
     );

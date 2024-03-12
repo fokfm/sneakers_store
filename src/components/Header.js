@@ -1,5 +1,4 @@
 import React from "react";
-import {Link} from "react-router-dom";
 
 function Header(props) {
   return (
@@ -17,10 +16,13 @@ function Header(props) {
           <span>1205 $</span>
         </li>
           <li className="mr-20 cu-p">
-             <Link to='/favorites'>
-                 <img src="/img/heart.svg" width={18} height={18} alt="no img" />
-             </Link>
-
+              <img 
+                onClick={props.onHeardClick}
+                src={props.isFavoriteMode ? "/img/heard-liked.svg" : "/img/heart.svg"}
+                width={18}
+                height={18}
+                alt="no img"
+              />
           </li>
         <li>
           <img src="/img/user.svg" width={18} height={18} alt="no img" />

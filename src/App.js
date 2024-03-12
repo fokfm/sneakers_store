@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import Card from "./components/Card/Card";
+import Card from "./components/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
 import Favorites from "./components/Favorites";
@@ -8,17 +8,17 @@ import {Routes, Route, Link} from "react-router-dom";
 
 
 function App() {
-
     const urlItems = 'https://65d24eef987977636bfc3b74.mockapi.io/sneackers_api/v1/items';
     const urlPostItems = 'https://65d24eef987977636bfc3b74.mockapi.io/sneackers_api/v1/cart';
-
-
-
 
     const [items, setItems] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [cardItems, setCartItems] = useState([]);
     const [cartOpened, setCartOpened] = useState(false);
+
+    const [isFavoriteMode, setIsFavoriteMode] = useState(false);
+
+    const onChangeMode = () => setIsFavoriteMode(prev => !prev);
 
 
     useEffect(() => {
@@ -45,28 +45,17 @@ function App() {
 
     }
 
-
-
-
-
-
-
     const onChangeSearchInput = (event) => {
 
         setSearchValue(event.target.value)
         console.log(event.target.value)
     }
 
-
     return (
-
-
         <div className="wrapper clear">
-
-
             {cartOpened && <Drawer items={cardItems} onClickCart={() => setCartOpened(!cartOpened)}
                                    onDeleteInCart={onDeleteInCart}/>}
-            <Header onClickCart={() => setCartOpened(!cartOpened)}/>
+            <Header isFavoriteMode={isFavoriteMode} onHeardClick={onChangeMode} onClickCart={() => setCartOpened(!cartOpened)}/>
             <div className="content p-40">
                 <div className="d-flex align-center justify-between mb-40">
                     <h1>{searchValue ? `Search by:"${searchValue}"` : 'All sneakers'}</h1>
@@ -80,7 +69,14 @@ function App() {
                 </div>
                 <div className="sneakers d-flex flex-wrap">
                     {
-                        items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase())).map(item =>
+                        items
+                        .filter(item => {
+                            if (isFavoriteMode && !item.favorites) {
+                                return false;
+                            }
+
+                            return item.title.toLowerCase().includes(searchValue.toLowerCase())
+                        }).map(item =>
                             <Card
                                 key={item.id}
                                 onPlus={onAddToCard}
