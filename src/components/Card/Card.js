@@ -1,19 +1,28 @@
-import React from "react";
+import React, {useState} from "react";
 import styles from './Card.module.scss'
+import axios from "axios";
 
-function Card({title, imageUrl, price, onFavorite, onPlus}) {
-
+function Card({item, onPlus}) {
+    const {title, imageUrl, price, favorites: favoritDefault} = item;
     const [isAdded, setIsAdded] = React.useState(false);
+    const [fav, setFav] = useState(favoritDefault);
+
 
     const onClickPlus = () => {
         onPlus({title, imageUrl, price});
         setIsAdded(!isAdded)
     }
 
+    const onChangeFavorites = () => {
+        setFav((preFav) => {
+            axios.put(`https://65d24eef987977636bfc3b74.mockapi.io/sneackers_api/v1/items/${item.id}`, {
+                ...item, favorites: !preFav
+            });
+            return !preFav
+        });
 
-    // React.useEffect(() =>{
-    //   console.log('useeffect work');
-    // }, [isAdded]);
+
+    }
 
 
     return (
@@ -21,10 +30,9 @@ function Card({title, imageUrl, price, onFavorite, onPlus}) {
         <div className={styles.card}>
 
 
-
-
             <div className={styles.favorite}>
-                <img src="/img/heard-unliked.svg" alt="no img"/>
+                <img onClick={onChangeFavorites} src={fav ? '/img/heard-liked.svg' : "/img/heard-unliked.svg"}
+                     alt="no img"/>
             </div>
             <img src={imageUrl} alt="no img" width={133} height={112}/>
             <h5>{title}</h5>

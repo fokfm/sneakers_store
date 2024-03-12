@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 function Header(props) {
   return (
@@ -15,6 +16,12 @@ function Header(props) {
           <img src="/img/cart.svg" width={18} height={18} alt="no img" />
           <span>1205 $</span>
         </li>
+          <li className="mr-20 cu-p">
+             <Link to='/favorites'>
+                 <img src="/img/heart.svg" width={18} height={18} alt="no img" />
+             </Link>
+
+          </li>
         <li>
           <img src="/img/user.svg" width={18} height={18} alt="no img" />
         </li>
